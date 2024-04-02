@@ -1,17 +1,10 @@
-import { Application, Autowire, MetafoksApplication, With } from 'metafoks-application'
+import { Application, Configure, With } from 'metafoks-application'
+import { MetafoksWebServerExtension } from '../src'
+
 import './AController'
 import './BController'
-import { MetafoksWebServer, MetafoksWebServerExtension } from '../src'
-
-MetafoksApplication.shared.configReader.configure({ configsPath: 'example/config' })
 
 @With(MetafoksWebServerExtension)
+@Configure({ configReader: { configsPath: 'example/config' } })
 @Application
-export class App {
-  @Autowire
-  public ws!: MetafoksWebServer
-
-  public async start() {
-    await this.ws.start()
-  }
-}
+export class App {}
