@@ -1,0 +1,12 @@
+
+###
+GET http://localhost:8085/a/test
+
+###
+GET http://localhost:8085/b/test
+
+###
+GET http://localhost:8085/b/ret
+
+###
+GET http://localhost:8085/a/err
