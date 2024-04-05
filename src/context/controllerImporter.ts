@@ -17,7 +17,6 @@ interface DocEntry {
 
 export async function controllerImporter(path: string) {
   const logger = LoggerFactory.createWithName('ControllersScanner')
-  logger.level = 'DEBUG'
   logger.info(`scanning controllers path <${path}>`)
 
   const files = glob.sync(path) // это возвращает массив путей всех файлов .ts в директории и поддиректориях

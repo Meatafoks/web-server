@@ -42,7 +42,7 @@
     "ts-jest": "29.0.5"
   },
   "peerDependencies": {
-    "metafoks-application": "^1.0.12"
+    "metafoks-application": "^1.0.14"
   },
   "prettier": "@metafoks/prettier",
   "eslintConfig": {

@@ -28,7 +28,6 @@ export class MetafoksWebServer {
     private readonly config: MetafoksWebServerConfig,
     private readonly modifier?: (app: Express) => void | Promise<void>,
   ) {
-    this._logger.level = 'DEBUG'
     this._instance = express()
 
     if (this.config.useCors !== false) this._instance.use(cors(this.config.cors))
