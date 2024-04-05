@@ -1,7 +1,7 @@
 import { ExpressController } from '../exp'
 import { Middleware } from '@decorators/express/lib/src/middleware'
 import { RawService } from 'metafoks-application'
-import { MetafoksWebControllerIdentifier } from './id'
+import { MetafoksWebControllerIdentifier } from '../context'
 
 export function Controller(url: string, middleware?: Middleware[]): ClassDecorator {
   return target => {

@@ -1,4 +1,4 @@
-import { Controller, Get, Res, Response, Status } from '../src'
+import { Controller, Get, Res, Response, Status } from '../../src'
 
 @Controller('/a')
 export class AController {
@@ -9,8 +9,8 @@ export class AController {
 
   @Get('/err')
   @Status(201)
-  errTest(@Res() res: Response) {
+  errTest() {
     throw new Error('test error')
-    res.send({ ok: -1 })
+    return { ok: 2 }
   }
 }

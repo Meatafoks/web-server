@@ -1,4 +1,4 @@
-import { Get, Res, Response, Controller, Status } from '../src'
+import { Get, Res, Response, Controller, Status } from '../../src'
 
 @Controller('/b')
 export class BController {

@@ -8,4 +8,9 @@ export interface MetafoksWebServerConfig {
   useBodyParser?: boolean
   useCors?: boolean
   useErrorHandler?: boolean
+
+  scanner?: {
+    enabled?: boolean
+    controllersGlob?: string
+  }
 }
