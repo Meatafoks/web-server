@@ -1,6 +1,6 @@
 {
   "name": "@metafoks/web-server",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Metafoks Application Web Server",
   "main": "lib/index.js",
   "files": [
