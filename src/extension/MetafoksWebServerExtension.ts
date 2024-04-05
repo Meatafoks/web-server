@@ -22,5 +22,9 @@ export const MetafoksWebServerExtension = (
       }
       await container.get(MetafoksWebServer).start()
     },
+    close: async (force, container) => {
+      const ws = container.get(MetafoksWebServer)
+      await ws.stop()
+    },
   }
 }

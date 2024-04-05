@@ -37,9 +37,17 @@ export class MetafoksWebServer {
   /**
    * Завершает работу сервера
    */
-  public stop() {
-    this._server?.close(() => {
-      this._logger.info('web server has been stopped')
+  public async stop(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this._server?.close(err => {
+        if (err) {
+          this._logger.warn(`error while stopping server: ${err.message}`)
+          reject(err)
+          return
+        }
+        this._logger.info('web server has been stopped')
+        resolve()
+      })
     })
   }
 
