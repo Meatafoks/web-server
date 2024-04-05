@@ -1,6 +1,6 @@
 
 ###
-GET http://localhost:8085/a/test
+GET http://localhost:8085/a/test?ok=1&and=2
 
 ###
 GET http://localhost:8085/b/test
