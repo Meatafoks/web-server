@@ -51,7 +51,7 @@ export async function controllerImporter(path: string) {
         for (const dec of decorators) {
           const text = dec.getText()
           if (text) {
-            if (/@Controller\(.+\)/.test(text)) {
+            if (/@RestController\(.+\)/.test(text)) {
               logger.info(`found controller: <${fileName}>`)
               filesWithController.add(fileName)
             }

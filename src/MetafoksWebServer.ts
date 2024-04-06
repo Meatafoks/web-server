@@ -1,13 +1,12 @@
 import express, { Express } from 'express'
 import { MetafoksWebServerConfig } from './config'
 import { Container, LoggerFactory } from 'metafoks-application'
-import { attachControllerInstances, ERROR_MIDDLEWARE } from '@decorators/express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import { MetafoksWebControllerIdentifier } from './context'
-import { ExpressMeta } from '@decorators/express/lib/src/meta'
-import { WebServerContainer, Request, Response } from './exp'
 import * as http from 'http'
+import { ExpressMeta } from './decoratorsexpress/meta'
+import { attachControllerInstances } from './decoratorsexpress'
 
 export class MetafoksWebServer {
   public static patchers: Array<(...args: any[]) => void> = []
@@ -59,18 +58,6 @@ export class MetafoksWebServer {
       this._logger.info([req.method, req.path + query].filter(value => !!value).join(' '))
       next()
     })
-
-    if (this.config.useErrorHandler !== false) {
-      WebServerContainer.provide([
-        {
-          provide: ERROR_MIDDLEWARE,
-          useValue: (error: Error, request: Request, response: Response) => {
-            this._logger.error(error)
-            response.status(500).send({ error: error.name ?? 'Internal Server Error', message: error.message })
-          },
-        },
-      ])
-    }
 
     const controllers = Container.getMany(MetafoksWebControllerIdentifier.toString())
     for (const ctr of controllers) {

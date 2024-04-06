@@ -16,7 +16,7 @@
   "author": "Yakov Foks <notafoks@yandex.ru>",
   "license": "MIT",
   "dependencies": {
-    "@decorators/express": "3.0.0",
+    "@decorators/di": "3.1.0",
     "@metafoks/toolbox": "1.0.0",
     "body-parser": "1.20.2",
     "cors": "2.8.5",

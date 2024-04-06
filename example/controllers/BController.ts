@@ -1,14 +1,14 @@
-import { Get, Res, Response, Controller, Status } from '../../src'
+import { GetMapping, RestController, ResponseStatus } from '../../src'
 
-@Controller('/b')
+@RestController('/b')
 export class BController {
-  @Get('/test')
-  test(@Res() res: Response) {
-    res.send({ ok: 2 })
+  @GetMapping('/test')
+  test() {
+    return { ok: 2 }
   }
 
-  @Get('/ret')
-  @Status(401)
+  @GetMapping('/ret')
+  @ResponseStatus(401)
   async ret() {
     return { ok: 812 }
   }
