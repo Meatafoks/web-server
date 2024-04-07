@@ -1,15 +1,17 @@
-import express, { Express } from 'express'
+import express, { Express, RouterOptions } from 'express'
 import { WebServerConfig } from './config'
-import { Container, ExtensionFactory, LoggerFactory } from 'metafoks-application'
+import { Container, ExtensionFactory, LoggerFactory, RawService } from 'metafoks-application'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import { MetafoksWebControllerIdentifier } from './context'
 import * as http from 'http'
-import { connectRestControllersToExpress, RestControllerClass } from './_core'
+import { connectRestControllersToExpress, getMeta, Middleware, RestControllerClass, RestControllerMeta } from './_core'
 import { extension } from './extension/Extension'
+import { WebServerContext } from './context/WebServerContext'
 
 export class WebServer {
   public static extension = ExtensionFactory.create(extension)
+  public static readonly context = WebServerContext
 
   public static patchers: Array<(...args: any[]) => void> = []
   private readonly _instance: Express

@@ -1,8 +1,7 @@
 import { RouterOptions } from 'express'
 
-import { RestControllerClass, RestControllerMeta, getMeta, Middleware } from '../_core'
-import { RawService } from 'metafoks-application'
-import { MetafoksWebControllerIdentifier } from '../context'
+import { Middleware } from '../_core'
+import { WebServerContext } from '../context/WebServerContext'
 
 /**
  * Registers controller for base url
@@ -15,12 +14,6 @@ export function RestController(
   middleware: Middleware[] = [],
 ): ClassDecorator {
   return target => {
-    const meta: RestControllerMeta = getMeta(target.prototype as RestControllerClass)
-
-    meta.url = url
-    meta.middleware = Array.isArray(middlewareOrRouterOptions) ? middlewareOrRouterOptions : middleware
-    meta.routerOptions = Array.isArray(middlewareOrRouterOptions) ? null : (middlewareOrRouterOptions as any)
-
-    RawService({ id: MetafoksWebControllerIdentifier.toString(), multiple: true })(target)
+    WebServerContext.registerController(url, middlewareOrRouterOptions, middleware)(target)
   }
 }
