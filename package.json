@@ -1,6 +1,6 @@
 {
-  "name": "@metafoks/web-server",
-  "version": "1.1.0",
+  "name": "@metafoks/ws",
+  "version": "1.0.0",
   "description": "Metafoks Application Web Server",
   "main": "lib/index.js",
   "files": [
@@ -22,6 +22,7 @@
     "express": "4.19.2",
     "glob": "^10.3.12",
     "reflect-metadata": "0.2.2",
+    "swagger-ui-express": "^5.0.0",
     "typescript": "5.3.3"
   },
   "scripts": {
@@ -29,21 +30,22 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@metafoks/jest-config": "1.0.1",
     "@metafoks/eslint-config": "1.1.0",
+    "@metafoks/jest-config": "1.0.1",
     "@metafoks/prettier": "1.1.0",
     "@types/cors": "2.8.17",
     "@types/express": "4.17.21",
     "@types/jest": "29.4.0",
     "@types/node": "20.12.3",
+    "@types/swagger-ui-express": "^4.1.6",
     "eslint": "8.56.0",
     "eslint-plugin-jest": "27.9.0",
     "jest": "29.7.0",
-    "ts-jest": "29.1.2",
-    "prettier": "3.2.4"
+    "prettier": "3.2.4",
+    "ts-jest": "29.1.2"
   },
   "peerDependencies": {
-    "metafoks-application": "^1.0.17"
+    "metafoks-application": "^1.0.18"
   },
   "prettier": "@metafoks/prettier",
   "eslintConfig": {

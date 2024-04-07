@@ -1,16 +1,9 @@
-import {
-  Authorization,
-  Authorized,
-  GetMapping,
-  getRandomAvailablePort,
-  MetafoksWebServer,
-  RestController,
-} from '../src'
+import { Authorization, Authorized, GetMapping, getRandomAvailablePort, WebServer, RestController } from '../src'
 
 describe('test authorization', () => {
   const simpleMethodCall = jest.fn()
 
-  let ws: MetafoksWebServer
+  let ws: WebServer
   let port: number
 
   @RestController('/simple')
@@ -36,7 +29,7 @@ describe('test authorization', () => {
 
   beforeAll(async () => {
     port = await getRandomAvailablePort()
-    ws = new MetafoksWebServer({
+    ws = new WebServer({
       port,
       scanner: { enabled: false },
       _loggerLevelInternal: 'debug',

@@ -5,14 +5,14 @@ import {
   Authorized,
   GetMapping,
   getRandomAvailablePort,
-  MetafoksWebServer,
+  WebServer,
   RestController,
 } from '../src'
 
 describe('test authorization provider', () => {
   const simpleMethodCall = jest.fn()
 
-  let ws: MetafoksWebServer
+  let ws: WebServer
   let port: number
 
   @AuthorizationProviderComponent
@@ -35,7 +35,7 @@ describe('test authorization provider', () => {
 
   beforeAll(async () => {
     port = await getRandomAvailablePort()
-    ws = new MetafoksWebServer({
+    ws = new WebServer({
       port,
       scanner: { enabled: false },
       _loggerLevelInternal: 'debug',

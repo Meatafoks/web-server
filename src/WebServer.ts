@@ -1,16 +1,19 @@
 import express, { Express } from 'express'
-import { MetafoksWebServerConfig } from './config'
-import { Container, LoggerFactory } from 'metafoks-application'
+import { WebServerConfig } from './config'
+import { Container, ExtensionFactory, LoggerFactory } from 'metafoks-application'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import { MetafoksWebControllerIdentifier } from './context'
 import * as http from 'http'
 import { connectRestControllersToExpress, RestControllerClass } from './_core'
+import { extension } from './extension/Extension'
 
-export class MetafoksWebServer {
+export class WebServer {
+  public static extension = ExtensionFactory.create(extension)
+
   public static patchers: Array<(...args: any[]) => void> = []
   private readonly _instance: Express
-  private readonly _logger = LoggerFactory.create(MetafoksWebServer)
+  private readonly _logger = LoggerFactory.create(WebServer)
 
   private _server?: http.Server
 
@@ -23,7 +26,7 @@ export class MetafoksWebServer {
   }
 
   constructor(
-    private readonly config: MetafoksWebServerConfig,
+    private readonly config: WebServerConfig,
     private readonly modifier?: (app: Express) => void | Promise<void>,
   ) {
     this._instance = express()
@@ -70,7 +73,33 @@ export class MetafoksWebServer {
     await this.modifier?.(this._instance)
 
     // Запуск патчеров
-    MetafoksWebServer.patchers.forEach(fn => this._instance.use(fn))
+    WebServer.patchers.forEach(fn => this._instance.use(fn))
+
+    /*enableOpenApi(
+      this._instance,
+      {
+        info: {
+          title: 'Metafoks Web Server',
+          description: 'Metafoks Web Server',
+          version: '1.0.0',
+        },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        components: {
+          securitySchemes: {
+            bearerAuth: {
+              type: 'http',
+              scheme: 'bearer',
+              bearerFormat: 'JWT',
+            },
+          },
+        },
+      },
+      controllers,
+    )*/
 
     this._logger.debug('starting web server')
     if (this.config.host) {

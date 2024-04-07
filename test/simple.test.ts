@@ -1,9 +1,9 @@
-import { GetMapping, getRandomAvailablePort, MetafoksWebServer, RestController } from '../src'
+import { GetMapping, getRandomAvailablePort, WebServer, RestController } from '../src'
 
 describe('simple controllers test', () => {
   const simpleMethodCall = jest.fn()
 
-  let ws: MetafoksWebServer
+  let ws: WebServer
   let port: number
 
   @RestController('/simple')
@@ -17,7 +17,7 @@ describe('simple controllers test', () => {
 
   beforeAll(async () => {
     port = await getRandomAvailablePort()
-    ws = new MetafoksWebServer({
+    ws = new WebServer({
       port,
       scanner: { enabled: false },
       _loggerLevelInternal: 'debug',

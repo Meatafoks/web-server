@@ -1,7 +1,7 @@
 import {
   Body,
   GetMapping,
-  MetafoksWebServer,
+  WebServer,
   Params,
   PostMapping,
   Query,
@@ -16,7 +16,7 @@ describe('test params', () => {
   const simpleMethodCallWithHeaders = jest.fn()
 
   let port: number
-  let ws: MetafoksWebServer
+  let ws: WebServer
 
   @RestController('/simple')
   class SimpleController {
@@ -45,7 +45,7 @@ describe('test params', () => {
 
   beforeAll(async () => {
     port = await getRandomAvailablePort()
-    ws = new MetafoksWebServer({
+    ws = new WebServer({
       port,
       scanner: { enabled: false },
       _loggerLevelInternal: 'debug',

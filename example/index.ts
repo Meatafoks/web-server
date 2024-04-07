@@ -1,8 +1,8 @@
 import { Application, Configure, With } from 'metafoks-application'
-import { MetafoksWebServerExtension } from '../src'
+import { WebServer } from '../src'
 
 @With(
-  MetafoksWebServerExtension({
+  WebServer.extension.configure({
     scanner: {
       controllersGlob: 'example/*/**.ts',
     },

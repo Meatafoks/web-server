@@ -1,7 +1,7 @@
 import { CorsOptions } from 'cors'
 import { LoggerLevelValue } from 'metafoks-application'
 
-export interface MetafoksWebServerConfig {
+export interface WebServerConfig {
   port?: number
   host?: string
   cors?: CorsOptions

@@ -1,1 +1,1 @@
-export * from './MetafoksWebServerConfig'
+export * from './WebServerConfig'

@@ -1,7 +1,6 @@
 import { RouterOptions } from 'express'
 
-import { RestControllerClass, RestControllerMeta, getMeta } from '../_core/meta'
-import { Middleware } from '../_core/middleware'
+import { RestControllerClass, RestControllerMeta, getMeta, Middleware } from '../_core'
 import { RawService } from 'metafoks-application'
 import { MetafoksWebControllerIdentifier } from '../context'
 
