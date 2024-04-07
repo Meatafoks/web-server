@@ -1,4 +1,4 @@
-import { ExpressMeta, ParameterType, getMeta } from '../decoratorsexpress/meta'
+import { RestControllerMeta, ParameterType, getMeta } from '../_core/meta'
 
 /**
  * Parameter decorator factory, creates parameter decorator
@@ -7,7 +7,7 @@ function decoratorFactory(type: ParameterType) {
   return function (name?: string): ParameterDecorator {
     // @ts-ignore
     return function (target: object, methodName: string, index: number) {
-      const meta: ExpressMeta = getMeta(target)
+      const meta: RestControllerMeta = getMeta(target)
 
       if (meta.params[methodName] === undefined) {
         meta.params[methodName] = []
@@ -24,7 +24,7 @@ function decoratorFactory(type: ParameterType) {
 function decoratorFactoryNoName(type: ParameterType) {
   // @ts-ignore
   return function (target: object, methodName: string, index: number) {
-    const meta: ExpressMeta = getMeta(target)
+    const meta: RestControllerMeta = getMeta(target)
 
     if (meta.params[methodName] === undefined) {
       meta.params[methodName] = []

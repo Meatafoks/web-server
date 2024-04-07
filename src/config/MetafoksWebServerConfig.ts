@@ -1,4 +1,5 @@
 import { CorsOptions } from 'cors'
+import { LoggerLevelValue } from 'metafoks-application'
 
 export interface MetafoksWebServerConfig {
   port?: number
@@ -13,4 +14,6 @@ export interface MetafoksWebServerConfig {
     enabled?: boolean
     controllersGlob?: string
   }
+
+  _loggerLevelInternal?: LoggerLevelValue
 }

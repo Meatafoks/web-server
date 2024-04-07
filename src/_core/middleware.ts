@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction, RequestHandler, ErrorRequestHandler } from 'express'
-import { InjectionToken } from '@decorators/di'
 
-import { WebServerContainer } from './webServerContainer'
 import { Type } from './types'
+import { Container } from 'metafoks-application'
+import { getMeta, RestControllerClass, RestControllerMeta } from './meta'
 
 export type MiddlewareFunction = (req: Request, res: Response, next: NextFunction) => void
 export interface MiddlewareClass {
@@ -26,11 +26,6 @@ export function middlewareHandler(middleware: Middleware): RequestHandler {
 }
 
 /**
- * Error Middleware class registration DI token
- */
-export const ERROR_MIDDLEWARE = new InjectionToken('ERROR_MIDDLEWARE')
-
-/**
  * Add error middleware to the app
  */
 export function errorMiddlewareHandler(): ErrorRequestHandler {
@@ -47,7 +42,7 @@ export function errorMiddlewareHandler(): ErrorRequestHandler {
  * Instantiate middleware and invoke it with arguments
  */
 async function invokeMiddleware(
-  middleware: InjectionToken | Middleware | ErrorMiddleware,
+  middleware: any | Middleware | ErrorMiddleware,
   args: Parameters<MiddlewareFunction> | Parameters<ErrorMiddlewareFunction>,
 ) {
   const next = args[args.length - 1] as NextFunction
@@ -71,23 +66,27 @@ async function invokeMiddleware(
   }
 }
 
-async function getMiddlewareInstance(middleware: InjectionToken | Middleware | ErrorMiddleware) {
+async function getMiddlewareInstance(middleware: any | Middleware | ErrorMiddleware) {
   try {
-    if (!WebServerContainer.has(middleware) && (middleware as Type).prototype?.use) {
-      WebServerContainer.provide([
-        {
-          provide: middleware,
-          useClass: middleware as Type,
-        },
-      ])
+    if (!Container.has(middleware) && (middleware as Type).prototype?.use) {
+      Container.set(middleware, middleware as Type)
     }
 
-    return await WebServerContainer.get(middleware)
+    return await Container.get(middleware)
   } catch (e) {
     if (typeof middleware === 'function') {
       return middleware.prototype?.use ? new (middleware as Type<MiddlewareClass | ErrorMiddlewareClass>)() : middleware
     }
 
     return null
+  }
+}
+
+export function createMiddleware(target: any, property: string, middleware: MiddlewareFunction) {
+  const meta: RestControllerMeta = getMeta(target as RestControllerClass)
+  if (meta.url !== '') {
+    meta.middleware.unshift(middleware)
+  } else if (property in meta.routes) {
+    meta.routes[property].routes[0].middleware.unshift(middleware)
   }
 }

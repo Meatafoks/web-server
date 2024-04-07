@@ -5,8 +5,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import { MetafoksWebControllerIdentifier } from './context'
 import * as http from 'http'
-import { ExpressMeta } from './decoratorsexpress/meta'
-import { attachControllerInstances } from './decoratorsexpress'
+import { connectRestControllersToExpress, RestControllerClass } from './_core'
 
 export class MetafoksWebServer {
   public static patchers: Array<(...args: any[]) => void> = []
@@ -28,6 +27,9 @@ export class MetafoksWebServer {
     private readonly modifier?: (app: Express) => void | Promise<void>,
   ) {
     this._instance = express()
+    if (config._loggerLevelInternal) {
+      this._logger.level = config._loggerLevelInternal
+    }
 
     if (this.config.useCors !== false) this._instance.use(cors(this.config.cors))
     if (this.config.useBodyParser !== false) this._instance.use(bodyParser.json())
@@ -59,13 +61,12 @@ export class MetafoksWebServer {
       next()
     })
 
-    const controllers = Container.getMany(MetafoksWebControllerIdentifier.toString())
+    const controllers = Container.getMany<RestControllerClass>(MetafoksWebControllerIdentifier.toString())
     for (const ctr of controllers) {
-      const target = ctr as { __express_meta__: ExpressMeta }
-      this._logger.debug(`controller: ${target.__express_meta__.url}`)
+      this._logger.debug(`registering controller: ${ctr.__rest_controller_meta__!.url}`)
     }
 
-    await attachControllerInstances(this._instance, (controllers as any[]) ?? [])
+    await connectRestControllersToExpress(this._instance, controllers ?? [])
     await this.modifier?.(this._instance)
 
     // Запуск патчеров

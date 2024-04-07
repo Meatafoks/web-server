@@ -1,5 +1,5 @@
-import { ExpressMeta, getMeta, MethodMeta } from '../decoratorsexpress/meta'
-import { Middleware } from '../decoratorsexpress/middleware'
+import { RestControllerMeta, getMeta, MethodMeta } from '../_core/meta'
+import { Middleware } from '../_core/middleware'
 
 /**
  * Route decorator factory, creates decorator
@@ -88,7 +88,7 @@ export function ResponseStatus(status: number) {
 }
 
 function getRouteMeta(target: object, key: string): MethodMeta {
-  const meta: ExpressMeta = getMeta(target)
+  const meta: RestControllerMeta = getMeta(target)
 
   return (meta.routes[key] = meta.routes[key] || {
     routes: [],
